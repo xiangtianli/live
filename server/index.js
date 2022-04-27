@@ -13,6 +13,16 @@ router.get('/getVideo', async(ctx, next) => {
   const res =  await Douyu.getVideostrame('21113006')
   ctx.body = res;
 })
+router.post('/getArea', async(ctx, next) => {
+  console.log(ctx)
+  const res =  await Douyu.getArea()
+  ctx.body = res;
+})
+router.post('/getCache', async(ctx, next) => {
+  console.log(ctx.req)
+  const res =  await Douyu.getCache()
+  ctx.body = res.data;
+})
 
 app.use(json());
 app.use(router.routes());

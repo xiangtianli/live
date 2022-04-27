@@ -1,7 +1,6 @@
 const Douyu = require('./douyu');
 const axios = require('axios');
 const CryptoJS = require("crypto-js");
-const base64js = require('base64-js')
 
 
 
@@ -50,7 +49,7 @@ class Huya extends Douyu{
    * @returns 
    */
   static async getCache(page){
-    return await axios.get(`https://www.huya.com/cache.php?m=LiveList&do=getLiveListByPage&tagAll=0&page=${page}`)
+    return await axios.get(`https://www.huya.com/cache.php?m=LiveList&do=getLiveListByPage&tagAll=0&page=${page||1}`)
   }
   /**
    * 
