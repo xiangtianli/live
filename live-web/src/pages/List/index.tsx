@@ -5,14 +5,10 @@ export default function IndexPage(props) {
   const { match:{params:{type}}}= props;
   console.log(props)
   const vidoRef = useRef();
-  useEffect(()=>{
-    getCache(1).then(res=>{
-      console.log(res)
-    })
-  },[])
+
   return (
     <div>
-     {/* <Huya/> */}
+     <Huya/>
     </div>
   );
 }
