@@ -5,7 +5,8 @@ export default defineConfig({
     type: 'none',
   },
   routes: [
-    { path: '/', component: '@/pages/index' },
+    { path: '/', component: '@/pages/Menu/index' },
+    { path: '/list/:type', component: '@/pages/List/index' },
   ],
   fastRefresh: {},
   proxy:{
