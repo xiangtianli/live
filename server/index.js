@@ -9,9 +9,9 @@ const Douyu = require('./huya');
 const app = new Koa();
 
 
-router.get('/', async(ctx, next) => {
-  const res =  await Douyu.getVideostrame('20685450')
-  ctx.body = 1
+router.get('/getVideo', async(ctx, next) => {
+  const res =  await Douyu.getVideostrame('21113006')
+  ctx.body = res;
 })
 
 app.use(json());

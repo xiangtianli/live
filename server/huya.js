@@ -68,44 +68,25 @@ class Huya extends Douyu{
       headers,
     })
     const liveLineUrl=res.data.match(/"liveLineUrl":"([\s\S]*?)"/)[0].split(':')[1]
-    const url12 = CryptoJS.enc.Base64.parse('Ly9ody5obHMuaHV5YS5jb20vaHV5YWxpdmUvMjUyODcyNjk2OS0yNTI4NzI2OTY5LTEwODYwNzk5NjMyMzY4MjA1ODI0LTUwNTc1NzczOTQtMTAwNTctQS0wLTEubTN1OD9yYXRpbz0yMDAwJndzU2VjcmV0PWY0N2RkNDFkMjBkYTg5ZDY0YTNiMmM5ZTRhNDk2ZWZjJndzVGltZT02MjY5MGUyZiZmbT1SRmR4T0VKalNqTm9Oa1JLZERaVVdWOGtNRjhrTVY4a01sOGtNdyUzRCUzRCZjdHlwZT10YXJzX21vYmlsZSZmcz1iZ2N0JnQ9MTAz').toString(CryptoJS.enc.Utf8)
+    const url12 = CryptoJS.enc.Base64.parse(liveLineUrl.split('"')[1]).toString(CryptoJS.enc.Utf8)
     const [i, b] = url12.split('?'),
         r= i.split('/'),
-        // s= re.sub(r'.(flv|m3u8)', '', r[-1]), // 待修改
-        c=b.split('&',3),
-        n=queryString(b);
-        fm= n.fm,
-        u=CryptoJS.enc.Base64.parse(fm).toString(),
+        s=r[r.length-1].split('.')[0],
+        c=b.split('&fm'),
+        n=queryString(b),
+        fm=decodeURIComponent(n.fm),
+        u=CryptoJS.enc.Base64.parse(fm).toString(CryptoJS.enc.Utf8),
         p=u.split('_')[0],
         f= new Date().getDate()+'0000000',
         l=n['wsTime'],
         t='0',
-        h=`_${p}${t}${s}${f}${l}`,
+        h=`${p}_${t}_${s}_${f}_${l}`,
         m= CryptoJS.MD5(h),
         y=c[c.length-1],
-        url1=`${i}?wsSecret=${m}&wsTime=${l}&u=${t}&seqid=${f}&${y}`;
-        console.log(url1)
-  //取出 fm wsTime  fm base64解码 给到 p
-// https://hw.hls.huya.com/huyalive/2528726969-2528726969-10860799632368205824-5057577394-10057-A-0-1.m3u8
-
-    return {data:1}
-    // try:
-//     response = requests.get(url=room_url, headers=header).text
-//     liveLineUrl = re.findall(r'"liveLineUrl":"([\s\S]*?)",', response)[0]
-//     liveline = base64.b64decode(liveLineUrl).decode('utf-8')
-//     if liveline:
-//         if 'replay' in liveline:
-//             return '直播录像：' + liveline
-//         else:
-//             liveline = live(liveline)
-//             real_url = ("https:" + liveline).replace("hls", "flv").replace("m3u8", "flv")
-//     else:
-//         real_url = '未开播或直播间不存在'
-// except:
-//     real_url = '未开播或直播间不存在'
-// return real_url
-
-
+        url1=`https:${i}?wsSecret=${m}&wsTime=${l}&u=${t}&seqid=${f}&fm=${c[1]}`;
+        let str = url1.replace('m3u8','flv');
+       str =str.replace('hls','flv')
+    return str
   }
 }
 module.exports =Huya
