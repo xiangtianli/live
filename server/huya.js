@@ -22,7 +22,8 @@ function queryString(str) {
 class Huya extends Douyu{
   static did = '10000000000000000000000000001501';
   static async getArea(bussType){
-    return await axios.get(`https://live.cdn.huya.com/liveconfig/game/bussLive?bussType=${bussType}`)
+    const res =  await axios.get(`https://live.cdn.huya.com/liveconfig/game/bussLive?bussType=${bussType}`)
+    return res.data.data
   }
   /**
    * @description 获取分类下直播间
@@ -31,7 +32,8 @@ class Huya extends Douyu{
    * @returns 
   */
   static async getRoomList(page,type){
-    return await axios.get(`https://live.cdn.huya.com/liveHttpUI/getLiveList?iGid=${type}&iPageNo=${page}&iPageSize=20`)
+    const res = await axios.get(`https://live.cdn.huya.com/liveHttpUI/getLiveList?iGid=${type}&iPageNo=${page}&iPageSize=20`)
+    return res.data
   }
   /**
    * @description 查询

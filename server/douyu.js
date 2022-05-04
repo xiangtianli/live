@@ -3,14 +3,9 @@ const CryptoJS = require("crypto-js");
 class Douyu {
   static did='10000000000000000000000000001501';
   static t10 = new Date().getTime() +''
-  static t13 = new Date().getTime()+'000'
+  static t13 = new Date().getTime() + ''
   static md5(str){
-    str = CryptoJS.enc.Utf8.parse(str);
-    console.log(str)
-    str =CryptoJS.MD5(str);
-    str=CryptoJS.enc.Utf16.stringify(str)
-    console.log(str)
-    return str.toString()
+    return CryptoJS.MD5(str).toString()
   }
   static async getArea(){
     return await axios.get('https://m.douyu.com/api/cate/list')
@@ -40,17 +35,16 @@ class Douyu {
    * @returns 
    */
   static async getCache(page){
-    return await axios.get(`https://m.douyu.com/api/cate/recList?cid=&ct=`)
+    return await axios.get(`https://m.douyu.com/api/home/mix`)
   }
   /**
    * 
    * @param {*} roomId 房间Id
    */
    static async getVideostrame(roomId){
-    const url = 'https://playweb.douyucdn.cn/lapi/live/hlsH5Preview/' + roomId;
-    console.log(url)
+    const url = `https://playweb.douyucdn.cn/lapi/live/hlsH5Preview/${roomId}`;
     const data = {
-      'rid':roomId,
+      'rid': roomId,
       'did': this.did
     }
     const auth = this.md5(roomId + this.t13)
@@ -59,14 +53,14 @@ class Douyu {
       'time': this.t13,
       'auth': auth
     }
-    console.log(data,headers)
-    const res = await axios({
-      url,
-      data,
-      method:'post',
+    const options = {
+      method: 'POST',
       headers,
-    })
-   return res
+      params: data,
+      url,
+    }
+    const res = await axios(options);
+    return `http://akm-tct.douyucdn.cn/live/${res.data.data.rtmp_live.split('_')[0]}.flv?uuid=`
   }
 }
 module.exports =Douyu

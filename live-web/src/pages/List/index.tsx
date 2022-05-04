@@ -1,14 +1,19 @@
-import { useEffect, useRef } from 'react';
-import {getArea, getCache } from './server';
 import Huya from './components/Huya';
+import Douyu from './components/Douyu';
 export default function IndexPage(props) {
   const { match:{params:{type}}}= props;
-  console.log(props)
-  const vidoRef = useRef();
-
   return (
     <div>
-     <Huya/>
+      {
+        (()=>{
+          switch(type){
+            case 'huya':
+              return(<Huya></Huya>)
+            case 'douyu':
+              return(<Douyu></Douyu>)
+          }
+        })()
+      }
     </div>
   );
 }
